@@ -26,7 +26,7 @@ export default function Header() {
           <Menu>
             <ul>
               <li>
-                <Link to="/dashboard">ALUNOS</Link>
+                <Link to="/students">ALUNOS</Link>
               </li>
               <li>
                 <Link to="/dashboard">PLANOS</Link>
