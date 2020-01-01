@@ -7,6 +7,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   height: 64px;
   max-width: 900px;
+  min-width: 770px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -17,6 +18,15 @@ export const Content = styled.div`
     align-items: center;
     margin-right: 10px;
     padding-right: 10px;
+
+    a {
+      font-weight: bold;
+      color: #999;
+      margin-right: 20px;
+    }
+    a:first-child {
+      margin-left: 20px;
+    }
   }
 
   aside {
