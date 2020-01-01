@@ -24,20 +24,10 @@ export default function Header() {
             <span>GYNPOINT</span>
           </ContentLogo>
           <Menu>
-            <ul>
-              <li>
-                <Link to="/students">ALUNOS</Link>
-              </li>
-              <li>
-                <Link to="/dashboard">PLANOS</Link>
-              </li>
-              <li>
-                <Link to="/dashboard">MATRÍCULAS</Link>
-              </li>
-              <li>
-                <Link to="/dashboard">PEDIDOS DE AUXÍLIO</Link>
-              </li>
-            </ul>
+            <Link to="/students">ALUNOS</Link>
+            <Link to="/dashboard">PLANOS</Link>
+            <Link to="/dashboard">MATRÍCULAS</Link>
+            <Link to="/dashboard">PEDIDOS DE AUXÍLIO</Link>
           </Menu>
         </nav>
         <aside>

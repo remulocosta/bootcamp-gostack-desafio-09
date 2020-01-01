@@ -21,13 +21,14 @@ export const Content = styled.div`
   width: 100%;
   max-width: 315px;
   text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 
   form {
     display: flex;
     flex-direction: column;
     margin-top: 30px;
 
-    label {
+    strong {
       font-size: 14px;
       font-weight: bold;
       color: #444;

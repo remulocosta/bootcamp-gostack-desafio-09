@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd, MdSearch } from 'react-icons/md';
-import { useSelector, useDispatch } from 'react-redux';
+import {
+  MdAdd,
+  MdSearch,
+  MdNavigateNext,
+  MdNavigateBefore,
+} from 'react-icons/md';
+// import { useDispatch } from 'react-redux';
 
 import api from '../../services/api';
 import {
@@ -8,18 +13,22 @@ import {
   Header,
   ContainerTable,
   ButtonAdd,
+  ButtonPage,
   ButtonSearch,
+  Footer,
 } from './styles';
 
 export default function Students() {
   const [students, setStudents] = useState([]);
-  const dispatch = useDispatch();
+  const [pagination, setPagination] = useState([]);
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadStudents() {
       const response = await api.get('students');
 
-      setStudents(response.data);
+      setStudents(response.data.docs);
+      setPagination(response.data.pagination);
     }
 
     loadStudents();
@@ -59,16 +68,10 @@ export default function Students() {
           </thead>
           <tbody>
             {students.map(student => (
-              <tr>
-                <td>
-                  <span>{student.name}</span>
-                </td>
-                <td>
-                  <span>{student.email}</span>
-                </td>
-                <td className="all_center">
-                  <span>{student.name}</span>
-                </td>
+              <tr key={student.id}>
+                <td className="name">{student.name}</td>
+                <td className="email">{student.email}</td>
+                <td className="age all_center">{student.age}</td>
                 <td>
                   <button
                     type="button"
@@ -89,6 +92,22 @@ export default function Students() {
             ))}
           </tbody>
         </ContainerTable>
+        <Footer>
+          <div>
+            <span>
+              Cadastros: {pagination.total} página {pagination.page} de{' '}
+              {pagination.pages}
+            </span>
+          </div>
+          <aside>
+            <ButtonPage type="button">
+              <MdNavigateBefore size={24} color="#FFF" />
+            </ButtonPage>
+            <ButtonPage type="button">
+              <MdNavigateNext size={24} color="#FFF" />
+            </ButtonPage>
+          </aside>
+        </Footer>
       </Container>
     </>
   );

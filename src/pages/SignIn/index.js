@@ -27,7 +27,7 @@ export default function Signin() {
       <img src={logo} alt="Gympoint" />
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <label htmlFor="email">SEU E-MAIL</label>
+        <strong>SEU E-MAIL</strong>
         <Input
           id="email"
           name="email"
@@ -35,7 +35,7 @@ export default function Signin() {
           placeholder="exemplo@email.com"
         />
 
-        <label htmlFor="password">SUA SENHA</label>
+        <strong>SUA SENHA</strong>
         <Input
           id="password"
           name="password"
