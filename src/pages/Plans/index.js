@@ -8,7 +8,6 @@ import {
 import { toast } from 'react-toastify';
 
 import swal from 'sweetalert';
-// import { useDispatch } from 'react-redux';
 
 import api from '../../services/api';
 import {
@@ -26,16 +25,19 @@ export default function Plans() {
   const [pagination, setPagination] = useState([]);
   const [page, setPage] = useState(1);
   const [title, setTitle] = useState('');
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadPlans() {
-      const response = await api.get('plans', {
-        params: { page, q: title },
-      });
+      try {
+        const response = await api.get('plans', {
+          params: { page, q: title },
+        });
 
-      setPlans(response.data.docs);
-      setPagination(response.data.pagination);
+        setPlans(response.data.docs);
+        setPagination(response.data.pagination);
+      } catch (err) {
+        toast.error('Ocorreu um erro ao obter os planos');
+      }
     }
 
     loadPlans();

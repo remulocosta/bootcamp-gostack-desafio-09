@@ -12,9 +12,8 @@ import { format, parseISO } from 'date-fns';
 import br from 'date-fns/locale/pt-BR';
 import swal from 'sweetalert';
 
-// import { useDispatch } from 'react-redux';
+import api from '~/services/api';
 
-import api from '../../services/api';
 import {
   Container,
   Header,
@@ -30,34 +29,37 @@ export default function Registrations() {
   const [pagination, setPagination] = useState([]);
   const [page, setPage] = useState(1);
   const [student, setStudent] = useState('');
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadRegistrations() {
-      const response = await api.get('registrations', {
-        params: { page, q: student },
-      });
+      try {
+        const response = await api.get('registrations', {
+          params: { page, q: student },
+        });
 
-      const data = response.data.docs.map(regist => ({
-        ...regist,
-        startDateFormatted: format(
-          parseISO(regist.start_date),
-          "d 'de' MMMM 'de' Y",
-          {
-            locale: br,
-          }
-        ),
-        endDateFormatted: format(
-          parseISO(regist.end_date),
-          "d 'de' MMMM 'de' Y",
-          {
-            locale: br,
-          }
-        ),
-      }));
+        const data = response.data.docs.map(regist => ({
+          ...regist,
+          startDateFormatted: format(
+            parseISO(regist.start_date),
+            "d 'de' MMMM 'de' Y",
+            {
+              locale: br,
+            }
+          ),
+          endDateFormatted: format(
+            parseISO(regist.end_date),
+            "d 'de' MMMM 'de' Y",
+            {
+              locale: br,
+            }
+          ),
+        }));
 
-      setRegistrations(data);
-      setPagination(response.data.pagination);
+        setRegistrations(data);
+        setPagination(response.data.pagination);
+      } catch (err) {
+        toast.error('Ocorreu um erro ao obter as matrículas');
+      }
     }
 
     loadRegistrations();

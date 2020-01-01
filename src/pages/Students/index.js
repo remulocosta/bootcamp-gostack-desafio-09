@@ -8,9 +8,10 @@ import {
 import { toast } from 'react-toastify';
 
 import swal from 'sweetalert';
-// import { useDispatch } from 'react-redux';
 
-import api from '../../services/api';
+import api from '~/services/api';
+import history from '~/services/history';
+
 import {
   Container,
   Header,
@@ -26,23 +27,26 @@ export default function Students() {
   const [pagination, setPagination] = useState([]);
   const [page, setPage] = useState(1);
   const [name, setName] = useState('');
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadStudents() {
-      const response = await api.get('students', {
-        params: { page, q: name },
-      });
+      try {
+        const response = await api.get('students', {
+          params: { page, q: name },
+        });
 
-      setStudents(response.data.docs);
-      setPagination(response.data.pagination);
+        setStudents(response.data.docs);
+        setPagination(response.data.pagination);
+      } catch (err) {
+        toast.error('Ocorreu um erro ao obter os alunos');
+      }
     }
 
     loadStudents();
   }, [name, page]);
 
   function handleEditStudent(student) {
-    console.tron.log(student);
+    history.push(`/students/update/${student.id}`);
   }
   function handleDeleteStudent(student) {
     console.tron.log(student);

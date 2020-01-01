@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 import { format, parseISO } from 'date-fns';
 import br from 'date-fns/locale/pt-BR';
 
 // import { useDispatch } from 'react-redux';
 
-import api from '../../services/api';
+import Modal from '~/components/Modal';
+import api from '~/services/api';
+
 import {
   Container,
   Header,
@@ -19,34 +22,45 @@ export default function HelpOrder() {
   const [helpOrders, setHelpOrders] = useState([]);
   const [pagination, setPagination] = useState([]);
   const [page, setPage] = useState(1);
+  const [visible, setVisible] = useState(false);
+  const [orderId, setOrderId] = useState(null);
   // const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadHelpOrders() {
-      const response = await api.get('help-orders', {
-        params: { page },
-      });
+      try {
+        const response = await api.get('help-orders', { params: { page } });
 
-      const data = response.data.docs.map(helpOrder => ({
-        ...helpOrder,
-        createdDateFormatted: format(
-          parseISO(helpOrder.created_at),
-          "d 'de' MMMM 'de' Y",
-          {
-            locale: br,
-          }
-        ),
-      }));
+        const data = response.data.docs.map(helpOrder => ({
+          ...helpOrder,
+          createdDateFormatted: format(
+            parseISO(helpOrder.created_at),
+            "d 'de' MMMM 'de' Y",
+            {
+              locale: br,
+            }
+          ),
+        }));
 
-      setHelpOrders(data);
-      setPagination(response.data.pagination);
+        setHelpOrders(data);
+        setPagination(response.data.pagination);
+      } catch (err) {
+        toast.error('Ocorreu um erro ao obter os pedidos de auxílio');
+      }
     }
 
     loadHelpOrders();
   }, [page]);
 
   function handleReplyHelpOrder(helpOrder) {
-    console.tron.log(helpOrder);
+    setOrderId(helpOrder.id);
+    setVisible(true);
+  }
+
+  function handleOrderChange(id) {
+    console.tron.log('ID: ', id);
+    const updatedOrders = helpOrders.filter(Order => Order.id !== id);
+    setHelpOrders(updatedOrders);
   }
 
   return (
@@ -107,6 +121,12 @@ export default function HelpOrder() {
           </aside>
         </Footer>
       </Container>
+      <Modal
+        order_id={orderId}
+        visible={visible}
+        hide={() => setVisible(false)}
+        handleOrderChange={handleOrderChange}
+      />
     </>
   );
 }
