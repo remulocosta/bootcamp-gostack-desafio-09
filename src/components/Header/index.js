@@ -25,9 +25,9 @@ export default function Header() {
           </ContentLogo>
           <Menu>
             <Link to="/students">ALUNOS</Link>
-            <Link to="/dashboard">PLANOS</Link>
-            <Link to="/dashboard">MATRÍCULAS</Link>
-            <Link to="/dashboard">PEDIDOS DE AUXÍLIO</Link>
+            <Link to="/plans">PLANOS</Link>
+            <Link to="/registrations">MATRÍCULAS</Link>
+            <Link to="/helpOrders">PEDIDOS DE AUXÍLIO</Link>
           </Menu>
         </nav>
         <aside>

@@ -2,7 +2,7 @@ import { darken } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 960px;
+  max-width: 1200px;
   margin: 50px auto;
 `;
 
@@ -127,7 +127,7 @@ export const ButtonPage = styled.button`
 
 export const ContainerTable = styled.table`
   width: 100%;
-  min-width: 800px;
+  min-width: 1200px;
   background: #fff;
   border-radius: 4px;
   padding: 20px;
@@ -176,14 +176,20 @@ export const ContainerTable = styled.table`
     color: #de3b3b;
   }
 
-  .name {
-    width: 40%;
+  .student {
+    width: 25%;
   }
-  .email {
-    width: 30%;
+  .plan {
+    width: 20%;
   }
-  .age {
-    width: 10%;
+  .start {
+    width: 18%;
+  }
+  .end {
+    width: 18%;
+  }
+  .active {
+    width: 5%;
   }
 
   .all_center {

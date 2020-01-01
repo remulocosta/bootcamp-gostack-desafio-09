@@ -21,44 +21,44 @@ import {
   Footer,
 } from './styles';
 
-export default function Students() {
-  const [students, setStudents] = useState([]);
+export default function Plans() {
+  const [plans, setPlans] = useState([]);
   const [pagination, setPagination] = useState([]);
   const [page, setPage] = useState(1);
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    async function loadStudents() {
-      const response = await api.get('students', {
-        params: { page, q: name },
+    async function loadPlans() {
+      const response = await api.get('plans', {
+        params: { page, q: title },
       });
 
-      setStudents(response.data.docs);
+      setPlans(response.data.docs);
       setPagination(response.data.pagination);
     }
 
-    loadStudents();
-  }, [name, page]);
+    loadPlans();
+  }, [title, page]);
 
-  function handleEditStudent(student) {
-    console.tron.log(student);
+  function handleEditPlan(plan) {
+    console.tron.log(plan);
   }
-  function handleDeleteStudent(student) {
-    console.tron.log(student);
+  function handleDeletePlan(plan) {
+    console.tron.log(plan);
   }
 
-  function confirmDelete(student) {
+  function confirmDelete(plan) {
     swal({
-      text: `Deseja excluir o aluno: ${student.name} ?`,
+      text: `Deseja excluir o Plano: ${plan.title} ?`,
       icon: 'warning',
       dangerMode: true,
       buttons: ['Não', 'Sim'],
     }).then(async willDelete => {
       if (willDelete) {
         try {
-          handleDeleteStudent(student);
-          toast.success('Aluno excluído com sucesso');
+          handleDeletePlan(plans);
+          toast.success('Plano excluído com sucesso');
         } catch (error) {
           toast.error('Falha ao excluir, entre em contato com o suporte');
         }
@@ -70,7 +70,7 @@ export default function Students() {
     <>
       <Container>
         <Header>
-          <strong>Gerenciando alunos</strong>
+          <strong>Gerenciando planos</strong>
           <aside>
             <ButtonAdd type="button">
               <MdAdd size={16} color="#FFF" />
@@ -80,8 +80,8 @@ export default function Students() {
               <MdSearch size={16} color="#999" />
               <input
                 type="text"
-                placeholder="Buscar Aluno"
-                onChange={e => setName(e.target.value)}
+                placeholder="Buscar Plano"
+                onChange={e => setTitle(e.target.value)}
               />
             </ButtonSearch>
           </aside>
@@ -89,30 +89,30 @@ export default function Students() {
         <ContainerTable>
           <thead>
             <tr>
-              <th>NOME</th>
-              <th>E-MAIL</th>
-              <th className="all_center">IDADE</th>
+              <th>TÍTULO</th>
+              <th className="all_center">DURAÇÃO</th>
+              <th className="all_center">VALOR p/ MÊS</th>
               <th> </th>
             </tr>
           </thead>
           <tbody>
-            {students.map(student => (
-              <tr key={student.id}>
-                <td className="name">{student.name}</td>
-                <td className="email">{student.email}</td>
-                <td className="age all_center">{student.age}</td>
+            {plans.map(plan => (
+              <tr key={plan.id}>
+                <td className="title">{plan.title}</td>
+                <td className="duration all_center">{plan.duration}</td>
+                <td className="price all_center">{plan.price}</td>
                 <td>
                   <button
                     type="button"
                     id="edit"
-                    onClick={() => handleEditStudent(student)}
+                    onClick={() => handleEditPlan(plan)}
                   >
                     editar
                   </button>
                   <button
                     type="button"
                     id="delete"
-                    onClick={() => confirmDelete(student)}
+                    onClick={() => confirmDelete(plan)}
                   >
                     apagar
                   </button>

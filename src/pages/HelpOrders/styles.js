@@ -2,7 +2,7 @@ import { darken } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 960px;
+  max-width: 900px;
   margin: 50px auto;
 `;
 
@@ -53,46 +53,6 @@ export const Footer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-`;
-
-export const ButtonSearch = styled.button`
-  display: flex;
-  align-items: center;
-  height: 36px;
-  margin: 5px 0;
-  font-weight: bold;
-  color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-
-  svg {
-    margin: 10px;
-  }
-`;
-
-export const ButtonAdd = styled.button`
-  display: flex;
-  align-items: center;
-  width: 142px;
-  height: 36px;
-  margin: 5px 10px;
-  padding: 5px 10px;
-  background: #ee4d64;
-  font-weight: bold;
-  color: #fff;
-  border: 0;
-  border-radius: 4px;
-  font-size: 16px;
-  transition: background 0.2s;
-
-  &:hover {
-    background: ${darken(0.05, '#EE4D64')};
-  }
-
-  svg {
-    margin-right: 5px;
   }
 `;
 
@@ -168,22 +128,16 @@ export const ContainerTable = styled.table`
     font-size: 15px;
   }
 
-  #edit {
+  #reply {
     color: #4d85ee;
   }
 
-  #delete {
-    color: #de3b3b;
+  .student {
+    width: 50%;
   }
 
-  .name {
-    width: 40%;
-  }
-  .email {
+  .createdAt {
     width: 30%;
-  }
-  .age {
-    width: 10%;
   }
 
   .all_center {

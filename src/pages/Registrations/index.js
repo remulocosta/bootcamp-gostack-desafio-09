@@ -4,10 +4,14 @@ import {
   MdSearch,
   MdNavigateNext,
   MdNavigateBefore,
+  MdCheckCircle,
 } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+import { format, parseISO } from 'date-fns';
+import br from 'date-fns/locale/pt-BR';
 import swal from 'sweetalert';
+
 // import { useDispatch } from 'react-redux';
 
 import api from '../../services/api';
@@ -21,44 +25,62 @@ import {
   Footer,
 } from './styles';
 
-export default function Students() {
-  const [students, setStudents] = useState([]);
+export default function Registrations() {
+  const [registrations, setRegistrations] = useState([]);
   const [pagination, setPagination] = useState([]);
   const [page, setPage] = useState(1);
-  const [name, setName] = useState('');
+  const [student, setStudent] = useState('');
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    async function loadStudents() {
-      const response = await api.get('students', {
-        params: { page, q: name },
+    async function loadRegistrations() {
+      const response = await api.get('registrations', {
+        params: { page, q: student },
       });
 
-      setStudents(response.data.docs);
+      const data = response.data.docs.map(regist => ({
+        ...regist,
+        startDateFormatted: format(
+          parseISO(regist.start_date),
+          "d 'de' MMMM 'de' Y",
+          {
+            locale: br,
+          }
+        ),
+        endDateFormatted: format(
+          parseISO(regist.end_date),
+          "d 'de' MMMM 'de' Y",
+          {
+            locale: br,
+          }
+        ),
+      }));
+
+      setRegistrations(data);
       setPagination(response.data.pagination);
     }
 
-    loadStudents();
-  }, [name, page]);
+    loadRegistrations();
+  }, [page, student]);
 
-  function handleEditStudent(student) {
-    console.tron.log(student);
+  function handleEditRegistration(registration) {
+    console.tron.log(registration);
   }
-  function handleDeleteStudent(student) {
-    console.tron.log(student);
+  function handleDeleteRegistration(registration) {
+    console.tron.log(registration);
   }
 
-  function confirmDelete(student) {
+  function confirmDelete(registration) {
     swal({
-      text: `Deseja excluir o aluno: ${student.name} ?`,
+      text: `Deseja excluir a matricula de: ${registration.student.name} ?`,
       icon: 'warning',
       dangerMode: true,
       buttons: ['Não', 'Sim'],
     }).then(async willDelete => {
       if (willDelete) {
         try {
-          handleDeleteStudent(student);
-          toast.success('Aluno excluído com sucesso');
+          handleDeleteRegistration(registration);
+          toast.success('Plano excluído com sucesso');
         } catch (error) {
           toast.error('Falha ao excluir, entre em contato com o suporte');
         }
@@ -70,7 +92,7 @@ export default function Students() {
     <>
       <Container>
         <Header>
-          <strong>Gerenciando alunos</strong>
+          <strong>Gerenciando matrículas</strong>
           <aside>
             <ButtonAdd type="button">
               <MdAdd size={16} color="#FFF" />
@@ -80,8 +102,8 @@ export default function Students() {
               <MdSearch size={16} color="#999" />
               <input
                 type="text"
-                placeholder="Buscar Aluno"
-                onChange={e => setName(e.target.value)}
+                placeholder="Buscar Matrícula"
+                onChange={e => setStudent(e.target.value)}
               />
             </ButtonSearch>
           </aside>
@@ -89,30 +111,44 @@ export default function Students() {
         <ContainerTable>
           <thead>
             <tr>
-              <th>NOME</th>
-              <th>E-MAIL</th>
-              <th className="all_center">IDADE</th>
+              <th>ALUNO</th>
+              <th className="all_center">PLANO</th>
+              <th className="all_center">INÍCIO</th>
+              <th className="all_center">TÉRMINO</th>
+              <th className="all_center">ATIVA</th>
               <th> </th>
             </tr>
           </thead>
           <tbody>
-            {students.map(student => (
-              <tr key={student.id}>
-                <td className="name">{student.name}</td>
-                <td className="email">{student.email}</td>
-                <td className="age all_center">{student.age}</td>
+            {registrations.map(registration => (
+              <tr key={registration.id}>
+                <td className="student">{registration.student.name}</td>
+                <td className="plan all_center">{registration.plan.title}</td>
+                <td className="start all_center">
+                  {registration.startDateFormatted}
+                </td>
+                <td className="end all_center">
+                  {registration.endDateFormatted}
+                </td>
+                <td className="active all_center">
+                  {registration.active ? (
+                    <MdCheckCircle size={23} color="#42cb59" />
+                  ) : (
+                    <MdCheckCircle size={23} color="#c4c4c4" />
+                  )}
+                </td>
                 <td>
                   <button
                     type="button"
                     id="edit"
-                    onClick={() => handleEditStudent(student)}
+                    onClick={() => handleEditRegistration(registration)}
                   >
                     editar
                   </button>
                   <button
                     type="button"
                     id="delete"
-                    onClick={() => confirmDelete(student)}
+                    onClick={() => confirmDelete(registration)}
                   >
                     apagar
                   </button>

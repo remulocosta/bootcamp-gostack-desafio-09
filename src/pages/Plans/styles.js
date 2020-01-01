@@ -176,14 +176,14 @@ export const ContainerTable = styled.table`
     color: #de3b3b;
   }
 
-  .name {
+  .title {
     width: 40%;
   }
-  .email {
-    width: 30%;
+  .duration {
+    width: 20%;
   }
-  .age {
-    width: 10%;
+  .price {
+    width: 20%;
   }
 
   .all_center {
