@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 import { format, parseISO } from 'date-fns';
 import br from 'date-fns/locale/pt-BR';
 
-// import { useDispatch } from 'react-redux';
-
-import Modal from '~/components/Modal';
+import ActionButton from '~/components/ActionButton';
+import ModalAnswer from '~/components/ModalAnswer';
+import Pagination from '~/components/Pagination';
 import api from '~/services/api';
 
-import {
-  Container,
-  Header,
-  ContainerTable,
-  ButtonPage,
-  Footer,
-} from './styles';
+import { Container, Header, ContainerTable } from './styles';
 
 export default function HelpOrder() {
   const [helpOrders, setHelpOrders] = useState([]);
@@ -24,7 +17,6 @@ export default function HelpOrder() {
   const [page, setPage] = useState(1);
   const [visible, setVisible] = useState(false);
   const [orderId, setOrderId] = useState(null);
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadHelpOrders() {
@@ -84,44 +76,15 @@ export default function HelpOrder() {
                 <td className="student">{helpOrder.student.name}</td>
                 <td className="createdAt">{helpOrder.createdDateFormatted}</td>
                 <td>
-                  <button
-                    type="button"
-                    id="reply"
-                    onClick={() => handleReplyHelpOrder(helpOrder)}
-                  >
-                    Responder
-                  </button>
+                  <ActionButton reply={() => handleReplyHelpOrder(helpOrder)} />
                 </td>
               </tr>
             ))}
           </tbody>
         </ContainerTable>
-        <Footer>
-          <div>
-            <span>
-              Total: {pagination.total}, página {pagination.page} de{' '}
-              {pagination.pages}
-            </span>
-          </div>
-          <aside>
-            <ButtonPage
-              type="button"
-              disabled={!pagination.prevPage}
-              onClick={() => setPage(page - 1)}
-            >
-              <MdNavigateBefore size={24} color="#FFF" />
-            </ButtonPage>
-            <ButtonPage
-              type="button"
-              disabled={!pagination.nextPage}
-              onClick={() => setPage(page + 1)}
-            >
-              <MdNavigateNext size={24} color="#FFF" />
-            </ButtonPage>
-          </aside>
-        </Footer>
+        <Pagination pagination={pagination} setPage={setPage} />
       </Container>
-      <Modal
+      <ModalAnswer
         order_id={orderId}
         visible={visible}
         hide={() => setVisible(false)}

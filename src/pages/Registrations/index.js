@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import {
-  MdAdd,
-  MdSearch,
-  MdNavigateNext,
-  MdNavigateBefore,
-  MdCheckCircle,
-} from 'react-icons/md';
+import { MdAdd, MdSearch, MdCheckCircle } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 import { format, parseISO } from 'date-fns';
 import br from 'date-fns/locale/pt-BR';
 import swal from 'sweetalert';
 
+import ActionButton from '~/components/ActionButton';
+import Pagination from '~/components/Pagination';
 import api from '~/services/api';
 
 import {
@@ -19,9 +15,7 @@ import {
   Header,
   ContainerTable,
   ButtonAdd,
-  ButtonPage,
   ButtonSearch,
-  Footer,
 } from './styles';
 
 export default function Registrations() {
@@ -140,49 +134,16 @@ export default function Registrations() {
                   )}
                 </td>
                 <td>
-                  <button
-                    type="button"
-                    id="edit"
-                    onClick={() => handleEditRegistration(registration)}
-                  >
-                    editar
-                  </button>
-                  <button
-                    type="button"
-                    id="delete"
-                    onClick={() => confirmDelete(registration)}
-                  >
-                    apagar
-                  </button>
+                  <ActionButton
+                    handleEdit={() => handleEditRegistration(registration)}
+                    confirmDelete={() => confirmDelete(registration)}
+                  />
                 </td>
               </tr>
             ))}
           </tbody>
         </ContainerTable>
-        <Footer>
-          <div>
-            <span>
-              Total: {pagination.total}, página {pagination.page} de{' '}
-              {pagination.pages}
-            </span>
-          </div>
-          <aside>
-            <ButtonPage
-              type="button"
-              disabled={!pagination.prevPage}
-              onClick={() => setPage(page - 1)}
-            >
-              <MdNavigateBefore size={24} color="#FFF" />
-            </ButtonPage>
-            <ButtonPage
-              type="button"
-              disabled={!pagination.nextPage}
-              onClick={() => setPage(page + 1)}
-            >
-              <MdNavigateNext size={24} color="#FFF" />
-            </ButtonPage>
-          </aside>
-        </Footer>
+        <Pagination pagination={pagination} setPage={setPage} />
       </Container>
     </>
   );
