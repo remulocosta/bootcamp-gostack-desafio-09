@@ -38,7 +38,8 @@ export default function Pagination({ pagination, setPage }) {
 }
 
 Pagination.propTypes = {
-  pagination: PropTypes.node,
+  // eslint-disable-next-line react/forbid-prop-types
+  pagination: PropTypes.any,
   setPage: PropTypes.func,
 };
 

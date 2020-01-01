@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 import ActionButton from '~/components/ActionButton';
 import Pagination from '~/components/Pagination';
 import api from '~/services/api';
+import { formatPrice } from '~/util/format';
 
 import {
   Container,
@@ -29,7 +30,16 @@ export default function Plans() {
           params: { page, q: title },
         });
 
-        setPlans(response.data.docs);
+        const data = response.data.docs.map(plan => ({
+          ...plan,
+          durationFormatted:
+            plan.duration < 2
+              ? `${plan.duration} mês`
+              : `${plan.duration} meses`,
+          priceFormatted: formatPrice(plan.price),
+        }));
+
+        setPlans(data);
         setPagination(response.data.pagination);
       } catch (err) {
         toast.error('Ocorreu um erro ao obter os planos');
@@ -97,8 +107,10 @@ export default function Plans() {
             {plans.map(plan => (
               <tr key={plan.id}>
                 <td className="title">{plan.title}</td>
-                <td className="duration all_center">{plan.duration}</td>
-                <td className="price all_center">{plan.price}</td>
+                <td className="duration all_center">
+                  {plan.durationFormatted}
+                </td>
+                <td className="price all_center">{plan.priceFormatted}</td>
                 <td>
                   <ActionButton
                     handleEdit={() => handleEditPlan(plan)}

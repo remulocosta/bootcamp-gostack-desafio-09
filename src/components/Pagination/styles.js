@@ -48,6 +48,6 @@ export const ButtonPage = styled.button`
 
   &:disabled {
     background: #ccc;
-    cursor: default;
+    cursor: not-allowed;
   }
 `;
