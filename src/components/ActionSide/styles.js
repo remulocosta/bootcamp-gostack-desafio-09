@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ActionsButtons = styled.div`
+export const ActionsSide = styled.div`
   button {
     background: none;
     border: 0;

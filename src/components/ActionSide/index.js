@@ -2,12 +2,12 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { ActionsButtons } from './styles';
+import { ActionsSide } from './styles';
 
-export default function ActionButton({ handleEdit, confirmDelete, reply }) {
+export default function ActionSide({ handleEdit, confirmDelete, reply }) {
   return (
     <>
-      <ActionsButtons>
+      <ActionsSide>
         {!reply ? (
           <>
             <button type="button" id="edit" onClick={() => handleEdit()}>
@@ -22,19 +22,19 @@ export default function ActionButton({ handleEdit, confirmDelete, reply }) {
             Responder
           </button>
         )}
-      </ActionsButtons>
+      </ActionsSide>
     </>
   );
 }
 
-ActionButton.propTypes = {
+ActionSide.propTypes = {
   handleEdit: PropTypes.func,
   confirmDelete: PropTypes.func,
   reply: PropTypes.func,
 };
 
-ActionButton.defaultProps = {
-  handleEdit: null,
-  confirmDelete: null,
+ActionSide.defaultProps = {
+  handleEdit: () => {},
+  confirmDelete: () => {},
   reply: null,
 };

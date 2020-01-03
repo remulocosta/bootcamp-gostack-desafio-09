@@ -6,7 +6,7 @@ import { format, parseISO } from 'date-fns';
 import br from 'date-fns/locale/pt-BR';
 import swal from 'sweetalert';
 
-import ActionButton from '~/components/ActionButton';
+import ActionSide from '~/components/ActionSide';
 import Pagination from '~/components/Pagination';
 import api from '~/services/api';
 
@@ -134,7 +134,7 @@ export default function Registrations() {
                   )}
                 </td>
                 <td>
-                  <ActionButton
+                  <ActionSide
                     handleEdit={() => handleEditRegistration(registration)}
                     confirmDelete={() => confirmDelete(registration)}
                   />

@@ -44,6 +44,7 @@ export const ButtonSearch = styled.button`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  background-color: #fff;
 
   svg {
     margin: 10px;

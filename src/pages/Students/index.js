@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import swal from 'sweetalert';
 
-import ActionButton from '~/components/ActionButton';
+import ActionSide from '~/components/ActionSide';
 import Pagination from '~/components/Pagination';
 import api from '~/services/api';
 import history from '~/services/history';
@@ -29,7 +29,6 @@ export default function Students() {
         const response = await api.get('students', {
           params: { page, q: name },
         });
-
         setStudents(response.data.docs);
         setPagination(response.data.pagination);
       } catch (err) {
@@ -40,11 +39,11 @@ export default function Students() {
     loadStudents();
   }, [name, page]);
 
-  function handleEditStudent(student) {
-    history.push(`/students/update/${student.id}`);
-  }
-  function handleDeleteStudent(student) {
-    console.tron.log(student);
+  async function handleDeleteStudent(id) {
+    await api.delete(`/students/${id}`);
+    return setTimeout(() => {
+      window.location.reload(false);
+    }, 2000);
   }
 
   function confirmDelete(student) {
@@ -56,7 +55,7 @@ export default function Students() {
     }).then(async willDelete => {
       if (willDelete) {
         try {
-          handleDeleteStudent(student);
+          handleDeleteStudent(student.id);
           toast.success('Aluno excluído com sucesso');
         } catch (error) {
           toast.error('Falha ao excluir, entre em contato com o suporte');
@@ -71,7 +70,10 @@ export default function Students() {
         <Header>
           <strong>Gerenciando alunos</strong>
           <aside>
-            <ButtonAdd type="button">
+            <ButtonAdd
+              type="button"
+              onClick={() => history.push(`students/register`)}
+            >
               <MdAdd size={16} color="#FFF" />
               CADASTRAR
             </ButtonAdd>
@@ -101,8 +103,10 @@ export default function Students() {
                 <td className="email">{student.email}</td>
                 <td className="age all_center">{student.age}</td>
                 <td>
-                  <ActionButton
-                    handleEdit={() => handleEditStudent(student)}
+                  <ActionSide
+                    handleEdit={() =>
+                      history.push(`students/${student.id}/edit`)
+                    }
                     confirmDelete={() => confirmDelete(student)}
                   />
                 </td>

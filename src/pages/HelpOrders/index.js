@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { format, parseISO } from 'date-fns';
 import br from 'date-fns/locale/pt-BR';
 
-import ActionButton from '~/components/ActionButton';
+import ActionSide from '~/components/ActionSide';
 import ModalAnswer from '~/components/ModalAnswer';
 import Pagination from '~/components/Pagination';
 import api from '~/services/api';
@@ -35,6 +35,7 @@ export default function HelpOrder() {
         }));
 
         setHelpOrders(data);
+        console.tron.log(data);
         setPagination(response.data.pagination);
       } catch (err) {
         toast.error('Ocorreu um erro ao obter os pedidos de auxílio');
@@ -50,7 +51,6 @@ export default function HelpOrder() {
   }
 
   function handleOrderChange(id) {
-    console.tron.log('ID: ', id);
     const updatedOrders = helpOrders.filter(Order => Order.id !== id);
     setHelpOrders(updatedOrders);
   }
@@ -76,7 +76,7 @@ export default function HelpOrder() {
                 <td className="student">{helpOrder.student.name}</td>
                 <td className="createdAt">{helpOrder.createdDateFormatted}</td>
                 <td>
-                  <ActionButton reply={() => handleReplyHelpOrder(helpOrder)} />
+                  <ActionSide reply={() => handleReplyHelpOrder(helpOrder)} />
                 </td>
               </tr>
             ))}

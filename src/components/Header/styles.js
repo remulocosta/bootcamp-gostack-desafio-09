@@ -104,6 +104,7 @@ export const Profile = styled.div`
     button {
       color: #de3b3b;
       border: 0;
+      background-color: transparent;
       font-size: 12px;
     }
   }

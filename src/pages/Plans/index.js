@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import swal from 'sweetalert';
 
-import ActionButton from '~/components/ActionButton';
+import ActionSide from '~/components/ActionSide';
 import Pagination from '~/components/Pagination';
 import api from '~/services/api';
 import { formatPrice } from '~/util/format';
@@ -112,7 +112,7 @@ export default function Plans() {
                 </td>
                 <td className="price all_center">{plan.priceFormatted}</td>
                 <td>
-                  <ActionButton
+                  <ActionSide
                     handleEdit={() => handleEditPlan(plan)}
                     confirmDelete={() => confirmDelete(plan)}
                   />

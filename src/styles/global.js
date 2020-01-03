@@ -14,20 +14,17 @@ export default createGlobalStyle`
   }
 
   *:focus {
-    outline: 0;
+    outline: none;
   }
 
   html, body, #root {
     height: 100%;
   }
 
-  body {
+  body, input, button, textarea {
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
-  }
-
-  body, input, button {
-    font: 14px 'Roboto',sans-serif;;
+    font: 14px 'Roboto', sans-serif;
   }
 
   a {

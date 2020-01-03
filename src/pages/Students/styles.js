@@ -2,8 +2,62 @@ import { darken } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 960px;
+  max-width: 900px;
   margin: 50px auto;
+
+  form {
+    content {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      padding: 30px;
+
+      input {
+        border: 1px solid #eee;
+        border-radius: 4px;
+        height: 44px;
+        padding: 15px 15px;
+
+        margin: 0 0 10px;
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.7);
+        }
+      }
+      label {
+        color: #444;
+        font-weight: bold;
+      }
+      input {
+        margin-top: 5px;
+      }
+      > span {
+        color: #fb6f91;
+        align-self: flex-start;
+        margin: 0 0 10px;
+        font-weight: bold;
+      }
+      div {
+        > span {
+          color: #fb6f91;
+          align-self: flex-start;
+          margin: 0 0 10px;
+          font-weight: bold;
+        }
+        display: flex;
+        div {
+          flex: 1;
+
+          display: flex;
+          flex-direction: column;
+        }
+
+        :nth-child(2) {
+          margin-left: 15px;
+          margin-right: 15px;
+        }
+      }
+    }
+  }
 `;
 
 export const Header = styled.div`
@@ -44,6 +98,7 @@ export const ButtonSearch = styled.button`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  background-color: #fff;
 
   svg {
     margin: 10px;
